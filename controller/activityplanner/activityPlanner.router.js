@@ -14,6 +14,8 @@ const errorhandler_1 = require("../../middleware/errorhandler");
 const activityPlanner_controller_1 = require("./activityPlanner.controller");
 /** Variables */
 exports.activityPlannerRouter = express.Router({ mergeParams: true });
+/**Down Load ActivityPlanner in Csv File */
+exports.activityPlannerRouter.get('/download', timelogger_1.logTime, errorhandler_1.wrapAsync(activityPlanner_controller_1.downLoadFileActivity));
 /** Get All Planner */
 exports.activityPlannerRouter.get('/', timelogger_1.logTime, errorhandler_1.wrapAsync(activityPlanner_controller_1.getAllActivityPlanner));
 /** Create New Planner */

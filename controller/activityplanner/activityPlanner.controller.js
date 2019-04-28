@@ -10,6 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 /**Pakage import */
 const ActivityPlanne_1 = require("../../model/ActivityPlanne");
+/**Variables */
+const path = require('path');
+const json2csv = require('json2csv').parse;
+const fs = require('fs');
+const moment = require('moment');
+const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
+//const fields = ['Id', 'name', 'description'];
 /**Get All Activity Planners */
 exports.getAllActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
     const planners = yield ActivityPlanne_1.activityPlannerModel.find();
@@ -44,6 +51,36 @@ exports.updatePlanner = (req, res) => __awaiter(this, void 0, void 0, function* 
     const updatePlanner = yield ActivityPlanne_1.activityPlannerModel.findByIdAndUpdate(req.params.activityPlannerId, req.body, { new: true, });
     res.send({
         data: updatePlanner
+    });
+});
+/**Download ActivityPlanner in Csv file */
+exports.downLoadFileActivity = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    ActivityPlanne_1.activityPlannerModel.find(function (err, activitPlanners) {
+        if (err) {
+            return res.status(500).json({ err });
+        }
+        else {
+            let csv;
+            try {
+                csv = json2csv(activitPlanners, { fields });
+            }
+            catch (err) {
+                return res.status(500).json({ err });
+            }
+            const dateTime = moment().format('YYYYMMDDhhmmss');
+            const filePath = path.join(__dirname, "..", "..", "src", "exportFile", "activitPlanners" + dateTime + ".csv");
+            fs.writeFile(filePath, csv, function () {
+                if (err) {
+                    return res.json(err).status(500);
+                }
+                else {
+                    setTimeout(function () {
+                        fs.unlinkSync(filePath); // delete this file after 3000 seconds
+                    }, 3000000);
+                    return res.end(json2csv(activitPlanners, { fields }));
+                }
+            });
+        }
     });
 });
 //# sourceMappingURL=activityPlanner.controller.js.map
