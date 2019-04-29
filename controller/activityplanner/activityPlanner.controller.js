@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 /**Pakage import */
 const ActivityPlanne_1 = require("../../model/ActivityPlanne");
-const express_1 = require("express");
 /**Variables */
 const json2csv = require('json2csv').parse;
 const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
@@ -29,14 +28,32 @@ exports.getAllActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, fu
 });
 /** Create New Planner */
 exports.createNewPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    if (req.query.startTime < Date.now || req.query.startTime <= req.query.endTime || req.query.endTime < Date.now) {
-        express_1.response.status(req.body).send(new Error('Error Create New Plann'));
+    const myBody = req.body;
+    if (myBody.startTime < Date.now() || myBody.startTime >= myBody.endTime || myBody.endTime < Date.now()) {
+        res.send({
+            status: 'Planner can not create! Start Time muss lesser than End Time and bigger than Now',
+            data: myBody
+        });
     }
     else {
-        const createPlanner = yield ActivityPlanne_1.activityPlannerModel.create(req.body);
-        res.status(201).send({
-            data: createPlanner
+        const existPlann = yield ActivityPlanne_1.activityPlannerModel.findOne({
+            $and: [
+                { "startTime": { "$lt": myBody.startTime } },
+                { "endTime": { "$gt": myBody.startTime } }
+            ],
         });
+        if (existPlann === null) {
+            const createPlanner = yield ActivityPlanne_1.activityPlannerModel.create(req.body);
+            res.status(201).send({
+                data: createPlanner
+            });
+        }
+        else {
+            res.send({
+                status: 'Planner can not create! because you have a tragic plan',
+                data: myBody
+            });
+        }
     }
 });
 /** Get single Planner */

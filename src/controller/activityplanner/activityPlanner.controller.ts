@@ -23,13 +23,33 @@ export const getAllActivityPlanner = async (req: Request, res: Response) => {
 }
 /** Create New Planner */
 export const createNewPlanner = async (req: Request, res: Response) => {
-  if(req.query.startTime < Date.now || req.query.startTime <= req.query.endTime || req.query.endTime < Date.now) {
-    response.status(req.body).send(new Error('Error Create New Plann'));
-  } else {
-    const createPlanner: IActivityPlannerModel = await activityPlannerModel.create(req.body);
-    res.status(201).send({
-        data: createPlanner
+  const myBody = req.body;
+  if(myBody.startTime < Date.now() || myBody.startTime >= myBody.endTime || myBody.endTime < Date.now()) {
+    res.send({
+      status: 'Planner can not create! Start Time muss lesser than End Time and bigger than Now',
+      data: myBody
     });
+  } else {
+
+    const existPlann: IActivityPlannerModel | null= await activityPlannerModel.findOne({
+      $and: [
+        {"startTime": {"$lt": myBody.startTime}},
+        {"endTime" : {"$gt" : myBody.startTime}}
+      ],
+    });
+    if(existPlann === null){
+      const createPlanner: IActivityPlannerModel = await activityPlannerModel.create(req.body);
+      res.status(201).send({
+          data: createPlanner
+      });
+    } else{
+      res.send({
+        status: 'Planner can not create! because you have a tragic plan',
+        data: myBody
+      });
+    }
+
+    
   }
     
 }
