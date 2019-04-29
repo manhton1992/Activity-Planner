@@ -47,6 +47,80 @@ The program has following endpoints:
 | list  |  GET /users | Returns a list of all users. |
 |list  | GET/holidays | Return a list of holidays in Germany.  |
 
+### Example
+ - The URL: *http://localhost:3000/api/activityPlanners* returns result
+```sh
+{
+    "data": [
+         {
+            "priority": 0,
+            "_id": "5cc180c04ef9de2db0e049c9",
+            "name": "Waschen Auto und meine Body",
+            "description": "Wichtig",
+            "startTime": "2019-05-01T14:30:00.782Z",
+            "endTime": "2019-05-01T14:15:30.782Z",
+            "participant": "Hoang",
+            "place": "Wasche Hause",
+            "createdAt": "2019-04-25T09:41:20.826Z",
+            "updatedAt": "2019-04-29T13:50:17.191Z",
+            "__v": 0
+        },
+         {
+            "priority": 0,
+            "_id": "5cc1a1318a463e345c05c5e2",
+            "name": "Db2",
+            "startTime": "2019-05-01T14:30:00.782Z",
+            "endTime": "2019-05-01T14:15:30.782Z",
+            "place": "Wasche Hause",
+            "createdAt": "2019-04-25T11:59:45.788Z",
+            "updatedAt": "2019-04-25T11:59:45.788Z",
+            "__v": 0
+        }
+    ]
+}
+```
+- The URL: *http://localhost:3000/api/activityPlanners/5cc1a1318a463e345c05c5e2* returns result
+```sh
+{
+    "data": {
+            "priority": 0,
+            "_id": "5cc1a1318a463e345c05c5e2",
+            "name": "Db2",
+            "startTime": "2019-05-01T14:30:00.782Z",
+            "endTime": "2019-05-01T14:15:30.782Z",
+            "place": "Wasche Hause",
+            "createdAt": "2019-04-25T11:59:45.788Z",
+            "updatedAt": "2019-04-25T11:59:45.788Z",
+            "__v": 0
+        }
+}
+```
+- The URL: *http://localhost:3000/api/activityPlanners/upcomming* returns result
+```sh
+{
+    "data": {
+            "priority": 0,
+            "_id": "5cc180c04ef9de2db0e049c9",
+            "name": "Waschen Auto und meine Body",
+            "description": "Wichtig",
+            "startTime": "2019-05-01T14:30:00.782Z",
+            "endTime": "2019-05-01T14:15:30.782Z",
+            "participant": "Hoang",
+            "place": "Wasche Hause",
+            "createdAt": "2019-04-25T09:41:20.826Z",
+            "updatedAt": "2019-04-29T13:50:17.191Z",
+            "__v": 0
+        },
+}
+```
+- The URL: *http://localhost:3000/api/activities/past* returns result
+```sh
+{
+    "data": [
+    ]
+}
+```
+
 ## Running the tests
 
 There are 2 options to test the program: 
@@ -54,7 +128,7 @@ There are 2 options to test the program:
  - Running automated test
 
 ### Test with Postman
-- Download file postman_collection.json in folder fwe-ss19-754346-ha1/src\exportFile and import this file to Postman and tests with different endpoints can be executed
+- Download file postman_collection.json in folder fwe-ss19-fwe-ss19-754346-ha1/src\exportFile and import this file to Postman and tests with different endpoints can be executed
 
 ### Running automated tests
 You can run automated tests with npm
@@ -64,6 +138,10 @@ $ npm run test
 ## Authors
 
 * **Manh Ton Nguyen** 
+
+
+
+
 
 
 
