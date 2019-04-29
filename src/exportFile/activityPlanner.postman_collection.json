@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "7717a10a-6072-48e9-b85d-690fff1ae877",
+		"name": "activityPlanner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All ActivityPlanners",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new activityPlanner",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Waschen Auto\",\n\t\"description\": \"Wichtig\",\n\t\"startTime\": \"2019-05-01T17:00:00.782Z\",\n\t\"endTime\": \"2019-05-02T14:30:30.782Z\",\n\t\"participant\": \"Hoang\",\n\t\"place\": \"Wasche Hause\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Singer ActivityPlanner",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners/5cc1e5054e5a87325c3cc405",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners",
+						"5cc1e5054e5a87325c3cc405"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ActivityPlanner",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Auto wachen\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners/5cc1a1dba6ebf50c30c254e4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners",
+						"5cc1a1dba6ebf50c30c254e4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Activity Plannner in Csv Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners/download",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners",
+						"download"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Planner",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Waschen Auto und meine Body\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/activityPlanners/5cc180c04ef9de2db0e049c9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"activityPlanners",
+						"5cc180c04ef9de2db0e049c9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All  FeierTags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/feiertags",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"feiertags"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
