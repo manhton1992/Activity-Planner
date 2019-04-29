@@ -12,8 +12,10 @@ const express = __importStar(require("express"));
 const task_router_1 = require("./task/task.router");
 const user_router_1 = require("./user/user.router");
 const activityPlanner_router_1 = require("./activityplanner/activityPlanner.router");
+const feiertag_router_1 = require("./FeierTag/feiertag.router");
 exports.globalRouter = express.Router({ mergeParams: true });
 exports.globalRouter.use('/tasks', task_router_1.taskRouter);
 exports.globalRouter.use('/users', user_router_1.userRouter);
 exports.globalRouter.use('/activityPlanners', activityPlanner_router_1.activityPlannerRouter);
+exports.globalRouter.use('/feiertags', feiertag_router_1.feierTagRouter);
 //# sourceMappingURL=router.js.map
