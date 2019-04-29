@@ -14,4 +14,4 @@ const feiertag_controller_1 = require("./feiertag.controller");
 exports.holodayRouter = express.Router({ mergeParams: true });
 /**Basis routes */
 exports.holodayRouter.get('/', feiertag_controller_1.getAllHolidays);
-//# sourceMappingURL=feiertag.router.js.map
+//# sourceMappingURL=holiday.router.js.map

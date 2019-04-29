@@ -195,7 +195,7 @@
 			"response": []
 		},
 		{
-			"name": "Get All  FeierTags",
+			"name": "Get All  Holidays",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -204,7 +204,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/feiertags",
+					"raw": "http://localhost:3000/api/holidays",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -212,7 +212,7 @@
 					"port": "3000",
 					"path": [
 						"api",
-						"feiertags"
+						"holidays"
 					]
 				}
 			},

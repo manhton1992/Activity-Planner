@@ -9,9 +9,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
-const feiertag_controller_1 = require("./feiertag.controller");
+const holiday_controller_1 = require("./holiday.controller");
+const timelogger_1 = require("../../middleware/timelogger");
 /**Variables */
 exports.holodayRouter = express.Router({ mergeParams: true });
 /**Basis routes */
-exports.holodayRouter.get('/', feiertag_controller_1.getAllHolidays);
-//# sourceMappingURL=feiertag.router.js.map
+exports.holodayRouter.get('/', timelogger_1.logTime, holiday_controller_1.getAllHolidays);
+//# sourceMappingURL=holiday.router.js.map

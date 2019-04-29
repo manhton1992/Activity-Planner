@@ -31,4 +31,4 @@ exports.getAllHolidays = (req, res) => __awaiter(this, void 0, void 0, function*
         data: changedHolidays
     });
 });
-//# sourceMappingURL=feiertag.controller.js.map
+//# sourceMappingURL=holiday.controller.js.map
