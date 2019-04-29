@@ -10,6 +10,7 @@ import config from 'config';
 /**Variables */
 export const app :express.Application = express();
 app.use(bodyParser.json());
+var datetime = require('node-datetime');
 
 /** Setup Database */
 mongoose.connect(config.get('database.host'), {useNewUrlParser : true});

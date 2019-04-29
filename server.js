@@ -20,6 +20,7 @@ const config_1 = __importDefault(require("config"));
 /**Variables */
 exports.app = express_1.default();
 exports.app.use(bodyParser.json());
+var datetime = require('node-datetime');
 /** Setup Database */
 mongoose_1.default.connect(config_1.default.get('database.host'), { useNewUrlParser: true });
 exports.app.use('/api', router_1.globalRouter);

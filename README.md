@@ -54,7 +54,7 @@ There are 2 options to test the program:
  - Running automated test
 
 ### Test with Postman
-- Download file postman_collection.json in folder fwe-ss19-fwe-ss19-754346-ha1/src\exportFile and import this file to Postman and tests with different endpoints can be executed
+- Download file postman_collection.json in folder fwe-ss19-754346-ha1/src\exportFile and import this file to Postman and tests with different endpoints can be executed
 
 ### Running automated tests
 You can run automated tests with npm

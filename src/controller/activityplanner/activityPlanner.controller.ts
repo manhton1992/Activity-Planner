@@ -6,6 +6,7 @@ import { Request, Response, response } from "express";
 
 const json2csv = require('json2csv').parse;
 const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
+const moment = require('moment');
 
 /*
 const fs = require('fs');
@@ -111,6 +112,7 @@ export const downLoadFileActivity = async (req: Request, res : Response) => {
       })
     }
     */
+   /**Download ActivityPlanner in Csv file */
     export const downLoadFileActivity = async (req: Request, res : Response) => {
       activityPlannerModel.find(function (err, activitPlanners) {
         let csv;
@@ -125,3 +127,27 @@ export const downLoadFileActivity = async (req: Request, res : Response) => {
         }
       });
     }
+  /** Get All ActivityPlanner in past */
+  export const getAllPastActivityPlanner = async(req: Request, res : Response) => {
+    const date = new Date();
+    const planners : IActivityPlannerModel[] = await activityPlannerModel.find({
+      $and: [
+        {"endTime": {"$lt": date}}
+      ],
+    });
+    res.send({
+        data : planners,
+    });
+  }
+/** Get All ActivityPlanner in future */
+export const getAllUpcommingActivityPlanner = async(req: Request, res : Response) => {
+  const date = new Date();
+  const planners : IActivityPlannerModel[] | null= await activityPlannerModel.find({
+    $and: [
+      {"startTime": {"$gt": date}}
+    ],
+  });
+  res.send({
+      data : planners,
+  });
+}

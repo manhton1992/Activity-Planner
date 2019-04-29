@@ -13,6 +13,7 @@ const ActivityPlanne_1 = require("../../model/ActivityPlanne");
 /**Variables */
 const json2csv = require('json2csv').parse;
 const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
+const moment = require('moment');
 /*
 const fs = require('fs');
 const moment = require('moment');
@@ -110,6 +111,7 @@ export const downLoadFileActivity = async (req: Request, res : Response) => {
       })
     }
     */
+/**Download ActivityPlanner in Csv file */
 exports.downLoadFileActivity = (req, res) => __awaiter(this, void 0, void 0, function* () {
     ActivityPlanne_1.activityPlannerModel.find(function (err, activitPlanners) {
         let csv;
@@ -122,6 +124,30 @@ exports.downLoadFileActivity = (req, res) => __awaiter(this, void 0, void 0, fun
         catch (err) {
             return res.status(500).json({ err });
         }
+    });
+});
+/** Get All ActivityPlanner in past */
+exports.getAllPastActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    const date = new Date();
+    const planners = yield ActivityPlanne_1.activityPlannerModel.find({
+        $and: [
+            { "endTime": { "$lt": date } }
+        ],
+    });
+    res.send({
+        data: planners,
+    });
+});
+/** Get All ActivityPlanner in future */
+exports.getAllUpcommingActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    const date = new Date();
+    const planners = yield ActivityPlanne_1.activityPlannerModel.find({
+        $and: [
+            { "startTime": { "$gt": date } }
+        ],
+    });
+    res.send({
+        data: planners,
     });
 });
 //# sourceMappingURL=activityPlanner.controller.js.map
