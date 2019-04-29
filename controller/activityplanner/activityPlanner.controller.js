@@ -10,13 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 /**Pakage import */
 const ActivityPlanne_1 = require("../../model/ActivityPlanne");
+const express_1 = require("express");
 /**Variables */
-const path = require('path');
 const json2csv = require('json2csv').parse;
+const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
+/*
 const fs = require('fs');
 const moment = require('moment');
-const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
-//const fields = ['Id', 'name', 'description'];
+var csv_export=require('csv-export');
+const path = require('path');
+*/
 /**Get All Activity Planners */
 exports.getAllActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
     const planners = yield ActivityPlanne_1.activityPlannerModel.find();
@@ -26,10 +29,15 @@ exports.getAllActivityPlanner = (req, res) => __awaiter(this, void 0, void 0, fu
 });
 /** Create New Planner */
 exports.createNewPlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    const createPlanner = yield ActivityPlanne_1.activityPlannerModel.create(req.body);
-    res.status(201).send({
-        data: createPlanner
-    });
+    if (req.query.startTime < Date.now || req.query.startTime <= req.query.endTime || req.query.endTime < Date.now) {
+        express_1.response.status(req.body).send(new Error('Error Create New Plann'));
+    }
+    else {
+        const createPlanner = yield ActivityPlanne_1.activityPlannerModel.create(req.body);
+        res.status(201).send({
+            data: createPlanner
+        });
+    }
 });
 /** Get single Planner */
 exports.getSinglePlanner = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -54,32 +62,48 @@ exports.updatePlanner = (req, res) => __awaiter(this, void 0, void 0, function* 
     });
 });
 /**Download ActivityPlanner in Csv file */
-exports.downLoadFileActivity = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    ActivityPlanne_1.activityPlannerModel.find(function (err, activitPlanners) {
+/*
+export const downLoadFileActivity = async (req: Request, res : Response) => {
+    activityPlannerModel.find(function (err, activitPlanners) {
         if (err) {
-            return res.status(500).json({ err });
+          return res.status(500).json({ err });
         }
         else {
-            let csv;
-            try {
-                csv = json2csv(activitPlanners, { fields });
+          let csv;
+          try {
+            csv = json2csv(activitPlanners, { fields });
+          } catch (err) {
+            return res.status(500).json({ err });
+          }
+          const dateTime = moment().format('YYYYMMDDhhmmss');
+          const filePath = path.join(__dirname, "..", "..","src", "exportFile", "activitPlanners" + dateTime + ".csv");
+  
+          fs.writeFile(filePath, csv, function () {
+            if (err) {
+              return res.json(err).status(500);
             }
-            catch (err) {
-                return res.status(500).json({ err });
+            else {
+              setTimeout(function () {
+                fs.unlinkSync(filePath); // delete this file after 3000 seconds
+              }, 3000000)
+              return res.end(json2csv(activitPlanners, { fields }));
             }
-            const dateTime = moment().format('YYYYMMDDhhmmss');
-            const filePath = path.join(__dirname, "..", "..", "src", "exportFile", "activitPlanners" + dateTime + ".csv");
-            fs.writeFile(filePath, csv, function () {
-                if (err) {
-                    return res.json(err).status(500);
-                }
-                else {
-                    setTimeout(function () {
-                        fs.unlinkSync(filePath); // delete this file after 3000 seconds
-                    }, 3000000);
-                    return res.end(json2csv(activitPlanners, { fields }));
-                }
-            });
+          });
+        }
+      })
+    }
+    */
+exports.downLoadFileActivity = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    ActivityPlanne_1.activityPlannerModel.find(function (err, activitPlanners) {
+        let csv;
+        try {
+            csv = json2csv(activitPlanners, { fields });
+            res.setHeader('Content-disposition', 'attachment; filename=activityPlanners.csv');
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(csv);
+        }
+        catch (err) {
+            return res.status(500).json({ err });
         }
     });
 });

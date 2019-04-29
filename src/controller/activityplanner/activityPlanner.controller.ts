@@ -1,14 +1,18 @@
 /**Pakage import */
 import{IActivityPlannerModel, activityPlannerModel} from "../../model/ActivityPlanne";
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 
 /**Variables */
-const path = require('path');
+
 const json2csv = require('json2csv').parse;
+const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
+
+/*
 const fs = require('fs');
 const moment = require('moment');
-const fields = ['_id', 'name', 'description', 'startTime', 'endTime', 'place', 'priority', 'participant', 'category', 'createdAt', 'updatedAt'];
-//const fields = ['Id', 'name', 'description'];
+var csv_export=require('csv-export');
+const path = require('path');
+*/
 
 /**Get All Activity Planners */
 export const getAllActivityPlanner = async (req: Request, res: Response) => {
@@ -17,13 +21,17 @@ export const getAllActivityPlanner = async (req: Request, res: Response) => {
         data : planners,
     });
 }
-
 /** Create New Planner */
 export const createNewPlanner = async (req: Request, res: Response) => {
+  if(req.query.startTime < Date.now || req.query.startTime <= req.query.endTime || req.query.endTime < Date.now) {
+    response.status(req.body).send(new Error('Error Create New Plann'));
+  } else {
     const createPlanner: IActivityPlannerModel = await activityPlannerModel.create(req.body);
     res.status(201).send({
         data: createPlanner
     });
+  }
+    
 }
 
 /** Get single Planner */
@@ -52,6 +60,7 @@ export const updatePlanner =  async (req: Request, res : Response) => {
 }
 
 /**Download ActivityPlanner in Csv file */
+/*
 export const downLoadFileActivity = async (req: Request, res : Response) => {
     activityPlannerModel.find(function (err, activitPlanners) {
         if (err) {
@@ -80,4 +89,19 @@ export const downLoadFileActivity = async (req: Request, res : Response) => {
           });
         }
       })
+    }
+    */
+    export const downLoadFileActivity = async (req: Request, res : Response) => {
+      activityPlannerModel.find(function (err, activitPlanners) {
+        let csv;
+        try {
+          csv = json2csv(activitPlanners, { fields });
+          res.setHeader('Content-disposition', 'attachment; filename=activityPlanners.csv');
+          res.set('Content-Type', 'text/csv');
+          res.status(200).send(csv);
+
+        } catch (err) {
+          return res.status(500).json({ err });
+        }
+      });
     }
