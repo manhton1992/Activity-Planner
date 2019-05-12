@@ -8,7 +8,9 @@ import { globalErrorHandler } from './middleware/errorhandler';
 import config from 'config';
 
 /**Variables */
+var cors = require('cors');
 export const app :express.Application = express();
+app.use(cors());
 app.use(bodyParser.json());
 var datetime = require('node-datetime');
 

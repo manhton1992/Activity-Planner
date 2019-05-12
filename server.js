@@ -18,7 +18,9 @@ const router_1 = require("./controller/router");
 const errorhandler_1 = require("./middleware/errorhandler");
 const config_1 = __importDefault(require("config"));
 /**Variables */
+var cors = require('cors');
 exports.app = express_1.default();
+exports.app.use(cors());
 exports.app.use(bodyParser.json());
 var datetime = require('node-datetime');
 /** Setup Database */
