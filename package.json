@@ -11,7 +11,7 @@
     "date-and-time": "^0.6.3",
     "express": "^4.16.4",
     "json2csv": "^4.5.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "moment": "^2.24.0",
     "mongoose": "^5.5.3",
     "node-datetime": "^2.1.2",
